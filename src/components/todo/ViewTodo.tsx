@@ -7,8 +7,8 @@ type Props = {
 };
 
 export default function ViewTodo({ todoList }: Props) {
-  return todoList.map((item: any) => (
-    <div className="mt-6" id={item.id}>
+  return todoList.map((item: any,index:number) => (
+    <div className="mt-6" key={index}>
       <div className="px-5 py-3 bg-slate-900 text-white flex justify-between items-center rounded-sm">
         <div>
           <span className="text-sm">{item.title}</span>

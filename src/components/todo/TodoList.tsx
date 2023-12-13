@@ -17,8 +17,6 @@ export default function TodoList({}: Props) {
     const response = await fetch("/api/todo");
     const res = await response.json();
     setTodoList(res.message);
-    console.log("after loading", res);
-    
     setLoading(false);
   };
 
@@ -34,7 +32,6 @@ export default function TodoList({}: Props) {
       method: "POST",
       body: JSON.stringify({ todoItem }),
     });
-
     const res = await response.json();
     getTodo();
   };
