@@ -1,13 +1,30 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { PlusIcon } from "lucide-react";
+import ViewTodo from "./ViewTodo";
 
 type Props = {};
 
 export default function TodoList({}: Props) {
   const [todoItem, setTodoItem] = useState("");
+  const [todoList, setTodoList] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+
+  const getTodo = async () => {
+    setLoading(true);
+    const response = await fetch("/api/todo");
+    const res = await response.json();
+    setTodoList(res.message);
+    console.log("after loading", res);
+    
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getTodo();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoItem(e.currentTarget.value);
@@ -19,7 +36,7 @@ export default function TodoList({}: Props) {
     });
 
     const res = await response.json();
-    console.log(res);
+    getTodo();
   };
   return (
     <div className="flex justify-center items-center">
@@ -40,6 +57,13 @@ export default function TodoList({}: Props) {
             </Button>
           </div>
         </div>
+        {isLoading ? (
+          <div className="text-center p-6">Loading...</div>
+        ) : todoList.length > 0 ? (
+          <ViewTodo todoList={todoList} />
+        ) : (
+          <div className="text-center p-6">No Todo Found!</div>
+        )}
       </div>
     </div>
   );
