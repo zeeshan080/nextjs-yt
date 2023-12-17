@@ -1,23 +1,33 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
-import { PencilIcon, PlusIcon, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
+import EditTodo from "./EditTodo";
+
 type Props = {
   todoList: any;
+  getTodo: () => void;
 };
 
-export default function ViewTodo({ todoList }: Props) {
-  return todoList.map((item: any,index:number) => (
+export default function ViewTodo({ todoList, getTodo }: Props) {
+  const handleDelete = (id: string) => async () => {
+    const response = await fetch(`/api/todo`, {
+      method: "DELETE",
+      body: JSON.stringify({ todoId: id }),
+    });
+    const res = await response.json();
+    getTodo();
+  };
+
+  return todoList.map((item: any, index: number) => (
     <div className="mt-6" key={index}>
       <div className="px-5 py-3 bg-slate-900 text-white flex justify-between items-center rounded-sm">
         <div>
           <span className="text-sm">{item.title}</span>
         </div>
         <div className="flex gap-3">
-          <Button variant={"secondary"}>
-            <PencilIcon size={18} className="pr-1" /> Edit
-          </Button>
-          <Button variant={"destructive"}>
+          <EditTodo getTodo={getTodo} id = {item.id} title= {item.title}/>
+          <Button variant={"destructive"} onClick={handleDelete(item.id)}>
             <Trash2 size={18} className="pr-1" /> Delete
           </Button>
         </div>

@@ -57,7 +57,7 @@ export default function TodoList({}: Props) {
         {isLoading ? (
           <div className="text-center p-6">Loading...</div>
         ) : todoList.length > 0 ? (
-          <ViewTodo todoList={todoList} />
+          <ViewTodo todoList={todoList} getTodo = {getTodo}/>
         ) : (
           <div className="text-center p-6">No Todo Found!</div>
         )}

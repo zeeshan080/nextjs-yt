@@ -5,22 +5,29 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "migration:generate": "drizzle-kit generate:pg --config=drizzle.config.ts",
+    "db:push": "tsx  ./src/drizzle/migrate.ts",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@vercel/postgres": "^0.5.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "dotenv": "^16.3.1",
+    "drizzle-kit": "^0.20.6",
     "drizzle-orm": "^0.29.1",
     "lucide-react": "^0.294.0",
     "next": "14.0.4",
+    "postgres": "^3.4.3",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.1.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "tsx": "^4.6.2"
   },
   "devDependencies": {
     "@types/node": "^20",
